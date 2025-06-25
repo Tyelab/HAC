@@ -1,0 +1,75 @@
+
+%% add the HAC functions to your path
+addpath(genpath("../src/HAC"))
+
+% load the demo data
+load('punish_trials.mat')
+load('reward_trials.mat')
+
+% parameters for the baseline period before start of CS-onset (pre_ref) and
+% the 4 second experimental window following CS-onset (post_ref)
+pre_ref = 2000; % msec
+post_ref= 4000; % msec
+binWid = 100;   
+
+%% normalize to baseline for each protocol using our special zscore function
+cue_start_index = pre_ref/binWid;
+E_zdata = special_Zscore(Epsth,1, cue_start_index);  % cue onset at 20 if bin wid = 100
+A_zdata = special_Zscore(Apsth,1, cue_start_index);
+
+% smooth the data using a gaussian window
+smooth_window = [10 0];
+E_zdata_smooth = smoothdata(E_zdata,2, 'gaussian', smooth_window);
+A_zdata_smooth = smoothdata(A_zdata,2, 'gaussian', smooth_window);
+zdata_smooth = [E_zdata_smooth A_zdata_smooth];
+
+%% Hierarchical clustering algorithm parameters
+linkage_metric = 'ward';
+dist_metric = 'euclidean';
+thisCutoff = .23; % this value may be tuned by the user
+title_string = 'Results of Clustering';
+
+
+% set the ticklabels and other information for plotting
+xt.xticklabelrotation = 0;
+xt.xtick = [1 10 20 30 40 50 60 61 70 80 90 100 110 120];
+xt.xticklabel= [-2 -1 0 1 2 3 4 -2 -1 0 1 2 3 4];
+xt.xlabel='Time (s)';
+
+%% plot the original data
+
+figure; 
+imagesc(zdata_smooth)
+colormap jet
+title('Trial-averaged neural response to reward and punishment (unsorted)')
+set(gca,'XTick',xt.xtick)
+set(gca,'XTickLabel',xt.xticklabel)
+set(gca, 'XTickLabelRotation',xt.xticklabelrotation)
+xlabel(xt.xlabel)
+set(gca, 'YTick', 1:1:size(zdata_smooth,1)) 
+set(gca,'YDir','normal')
+ylabel('Neuronal Unit')
+caxis([-10 10])
+colorbar
+
+% run hierarchical clustering and produce image with dendrogram and heatmap
+[Z, T, ~,  f3]=HAC(zdata_smooth, linkage_metric,dist_metric, thisCutoff,title_string,xt);
+caxis([-10 10])
+
+% if you don't want to use the xtick and ytick information, you can call it
+% this way:
+%[Z, T, ~,  f3,outperm]=HAC(zdata_smooth, linkage_metric,dist_metric, thisCutoff, title_string);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
