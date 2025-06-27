@@ -78,7 +78,8 @@ end
 % uncomment this command if you would like to supress the y-tick labels
 %set(gca,'YTick',[])
 
-xlabel('Linkage'); ylabel('Neuronal Unit')
+xlabel('Linkage'); 
+ylabel('Neuronal Unit for Dendrogram')
 set(gca,'TickDir','out')
 set(gca,'FontName','Arial')
 %set(gca,'FontSize',7)
@@ -116,7 +117,7 @@ end
 set(gca,'YTick',1:1:N);
 set(gca,'YDir','normal')
 set(gca,'YTickLabel',outperm)
-ylabel('Neuronal Unit')
+ylabel('Neuronal Unit for Heatmap')
 
 
 % make pretty
