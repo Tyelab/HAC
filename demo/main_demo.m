@@ -16,6 +16,8 @@ binWid = 100;
 cue_start_index = pre_ref/binWid;
 E_zdata = special_Zscore(Epsth,1, cue_start_index);  % cue onset at 20 if bin wid = 100
 A_zdata = special_Zscore(Apsth,1, cue_start_index);
+% note: the special_zscore function allows you to use a specific baseline
+% period as a reference.
 
 % smooth the data using a gaussian window
 smooth_window = [10 0];
@@ -32,7 +34,7 @@ title_string = 'Results of Clustering';
 
 % set the ticklabels and other information for plotting
 xt.xticklabelrotation = 0;
-xt.xtick = [1 10 20 30 40 50 60 61 70 80 90 100 110 120];
+xt.xtick = [1 20 40 60 80 100 120 121 140 160 180 200 220 240];
 xt.xticklabel= [-2 -1 0 1 2 3 4 -2 -1 0 1 2 3 4];
 xt.xlabel='Time (s)';
 
@@ -41,14 +43,14 @@ xt.xlabel='Time (s)';
 figure; 
 imagesc(zdata_smooth)
 colormap jet
-title('Trial-averaged neural response to reward and punishment (unsorted)')
+title('Trial-averaged neural response to reward and punishment (unsorted)', 'FontSize',14)
 set(gca,'XTick',xt.xtick)
 set(gca,'XTickLabel',xt.xticklabel)
 set(gca, 'XTickLabelRotation',xt.xticklabelrotation)
 xlabel(xt.xlabel)
 set(gca, 'YTick', 1:1:size(zdata_smooth,1)) 
-set(gca,'YDir','normal')
-ylabel('Neuronal Unit')
+ylabel('Neuronal Unit (#)')
+set(gca, 'TickDir','out')
 caxis([-10 10])
 colorbar
 
