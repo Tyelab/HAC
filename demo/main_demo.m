@@ -66,6 +66,68 @@ caxis([-10 10])
 
 
 
+%%  plot individual cluster averages
+
+%% make supporting plots of the data in each cluster
+% start fresh with dendrogram so you can get color info
+figure
+[H,~,outperm] = dendrogram(Z, 0, 'Orientation','left','ColorThreshold', thisCutoff*max(Z(:,3)));
+clusterID = unique(T);
+
+% get the color matrix correspoding to your dendrogram
+for i=1:size(H,1)
+    for j=H(i).YData(H(i).XData==0)
+        cluster_colors(outperm(j),:)=H(i).Color;  %#ok<SAGROW>
+    end
+end
+
+%for ii = [9 4 8 3 6 1 7] % this will plot traces in sorted order
+for ii = 1:numel(clusterID)
+    % if there is only one neuron represented in the cluster, skip plotting it
+    if sum(T==clusterID(ii))==1, continue;end
+    
+    % get the color
+    cluster_color=cluster_colors(T==ii,:);
+    cluster_color = cluster_color(1,:);
+
+
+    % if you want additional details on the cluster, you can uncomment the
+    % following lines:
+    %     % plot each trace within the cluster as a line on one figure
+    %     f2=figure; clf;
+    %     plot(zdata_smooth(T ==clusterID(ii) ,:)','Color',cluster_color(1,:))
+    %     title(sprintf('Firing Rates from %d neurons in Cluster %d',sum(T ==clusterID(ii)),clusterID(ii)))
+    %     xlabel(xl.xlabel)
+    %     set(gca,'XTick',xl.xtick)
+    %     set(gca,'XTickLabel',xl.xticklabel)
+    %     set(gca,'TickDir','out')
+    %     set(gca,'FontName','Arial')
+    % %     set(gca,'TickLength',[0 0])
+    %     axis tight
+    
+
+    % plot shaded trace and show average trace in darker line
+    f3=figure; clf
+    %figure(f3); hold on;
+    y = zdata_smooth(T ==clusterID(ii),:);
+    %                 y = zdata_smooth(T ==clusterID(ii),:) + dp;
+    %                 dp = max(max(y));
+    x = 1:size(y,2);
+    plotshaded(x,y,cluster_color(1,:),f3,'std') % this shows the overall error around the average 
+    title(sprintf('Firing Rates from %d neurons in Cluster %d',sum(T ==clusterID(ii)),clusterID(ii)))
+    xlabel(xt.xlabel)
+    set(gca,'XTick',xt.xtick)
+    set(gca,'XTickLabel',xt.xticklabel)
+    set(gca,'TickDir','out')
+    set(gca,'FontName','Arial')
+%     set(gca,'TickLength',[0 0])
+    axis tight
+    ylim([-10 20])
+    
+   
+end
+
+
 
 
 
