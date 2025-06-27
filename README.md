@@ -10,4 +10,4 @@ In our example data, we have provided a set of neural responses to reward and pu
 
 ## Citation
 Please cite this respository as follows: 
-Tyelab. (2025). HAC: Hierarchical Agglomerative Clustering [Computer software]. GitHub. https://github.com/Tyelab/HAC 
+Tyelab. (2025). *HAC: Hierarchical Agglomerative Clustering* [Computer software]. GitHub. https://github.com/Tyelab/HAC 
