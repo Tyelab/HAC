@@ -26,5 +26,7 @@ Running the main_demo function will produce two plots.  The first plot (Figure 1
 
 The second plot (Figure 2) shows the results of clustering the responses.  On the left side of the plot is the dendrogram and shows the cluster number on the left side of that plot.  The specific parameters are shown in the title of the plot.  To turn this off, select the plot with your pointer and in the matlab command window type `title('')`.  The right side shows the heatmap, or the trial-averaged neural response to each simulus.  The x-axis here shows the times, where the CS-onset is shown at 0 s.
 
+The remaining plots show the average value of each cluster.  They are color coded to match the cluster dendrogram in Figure 2.
+
 Hover your mouse over the left plot again and select the magnifing tool to zoom in on cluster 7 results.  You can now read the y-labels more clearly.  These labels identify which neurons from your starting set ended up in this cluster.  You should see neuron indices 2, 9, 58, 177, and 190 are included in this cluster.  You can zoom in on your original data (figure 1) as a sanity check.  
 
